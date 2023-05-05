@@ -1,5 +1,5 @@
 name: 'Install system dependencies for renv packages'
 description: 'For projects that use renv, this will find and install all system dependencies'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
