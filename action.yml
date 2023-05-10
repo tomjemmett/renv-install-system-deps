@@ -1,5 +1,18 @@
 name: 'Install system dependencies for renv packages'
 description: 'For projects that use renv, this will find and install all system dependencies'
+inputs:
+  distribution:
+    description: "Name of distribution to use"
+    required: true
+    default: "ubuntu"
+  release:
+    description: "Release version to use"
+    required: true
+    default: "22.04"
+  lock_file:
+    description: "The location of the renv.lock file"
+    required: true
+    default: "renv.lock"
 runs:
   using: 'node16'
   main: 'dist/index.js'

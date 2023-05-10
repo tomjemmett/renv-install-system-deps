@@ -12734,14 +12734,18 @@ const { exec } = __nccwpck_require__(2081);
 let unique = (a) => [...new Set(a)];
 
 async function getDependencies() {
-  let rawdata = fs.readFileSync('renv.lock');
+  let lock_file = core.getInput('lock_file');
+  let distribution = core.getInput('distribution');
+  let release = core.getInput('release');
+
+  let rawdata = fs.readFileSync(lock_file);
   let renv = JSON.parse(rawdata);
 
   let packages = Object.entries(renv.Packages).filter(([k, v]) => v.Source == 'Repository').map(([k, v]) => k);
 
   let url = 'https://packagemanager.rstudio.com/__api__/repos/1/sysreqs?all=false' +
-    '&distribution=ubuntu&release=22.04' +
-    packages.reduce((p, c) => p + '&pkgname=' + c, '');
+    '&distribution=' + distribution + '&release=' + release
+  packages.reduce((p, c) => p + '&pkgname=' + c, '');
 
   try {
     const response = await got(url, { json: true });
